@@ -1,6 +1,16 @@
 import { TypographyH1, TypographyH2 } from '@/components/ui/typography';
+import useAboutMeState from '@/stores/aboutMeStore';
+import { useEffect } from 'react';
 
 const HomePage = () => {
+  const { aboutMe, loading, fetchAbout } = useAboutMeState();
+
+  console.log(aboutMe);
+
+  useEffect(() => {
+    fetchAbout();
+  }, [fetchAbout]);
+
   return (
     <section className='w-6xl p-16 flex flex-col gap-24'>
       <div className='flex flex-col gap-8'>
@@ -24,22 +34,18 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className='flex flex-col items-end'>
-        <TypographyH2 className='font-normal uppercase tracking-wide'>
-          Front End Developer
-        </TypographyH2>
-        <p className='w-2/4 text-right'>
-          Frontend Developer with 3+ years of experience building
-          high-performance, scalable, and user-friendly web applications.
-          Skilled in UI optimization, seamless API integration, and performance
-          enhancement. Experienced in full-stack development through personal
-          projects, focusing on secure data handling and PWA-enabled apps.
-          Collaborative team player, working closely with backend engineers, QA,
-          and stakeholders to deliver solutions aligned with business goals.
-          Passionate about continuous learning and creating impactful digital
-          products.
-        </p>
-      </div>
+      {loading ? (
+        <div>
+          <p>Loading ...</p>
+        </div>
+      ) : (
+        <div className='flex flex-col items-end'>
+          <TypographyH2 className='font-normal uppercase tracking-wide'>
+            {aboutMe?.title}
+          </TypographyH2>
+          <p className='w-2/4 text-right'>{aboutMe?.description}</p>
+        </div>
+      )}
 
       <div className='flex flex-col'>
         <TypographyH2 className='font-normal uppercase tracking-wide'>
