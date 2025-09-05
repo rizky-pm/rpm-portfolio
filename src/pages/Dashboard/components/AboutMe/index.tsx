@@ -17,6 +17,7 @@ import { Textarea } from '@/components/ui/textarea';
 import useAboutMeState from '@/stores/aboutMeStore';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Pencil } from 'lucide-react';
 
 const CMSAboutMe = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -32,9 +33,7 @@ const CMSAboutMe = () => {
   });
 
   const onSubmit = async (values: aboutMeFormSchemaType) => {
-    console.log(values);
-
-    await updateAbout(values);
+    await updateAbout(values).then(() => setIsEdit(false));
   };
 
   useEffect(() => {
@@ -47,13 +46,6 @@ const CMSAboutMe = () => {
       form.setValue('description', aboutMe.description);
     }
   }, [aboutMe, form]);
-
-  //   if (loading) {
-  //     return (
-  //       <div className='flex justify-center items-center'>
-  //       </div>
-  //     );
-  //   }
 
   return (
     <div className='border-[1px] rounded-lg shadow p-8 space-y-4'>
@@ -68,7 +60,17 @@ const CMSAboutMe = () => {
         </div>
       ) : (
         <>
-          <TypographyH1 className='text-left'>About Me</TypographyH1>
+          <div className='flex justify-between items-center'>
+            <TypographyH1 className='text-left'>About Me</TypographyH1>
+            <Button
+              variant={'ghost'}
+              onClick={() => {
+                setIsEdit((prevState) => !prevState);
+              }}
+            >
+              <Pencil />
+            </Button>
+          </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
               <FormField
@@ -78,7 +80,11 @@ const CMSAboutMe = () => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder='Your title' {...field} />
+                      <Input
+                        placeholder='Your title'
+                        {...field}
+                        disabled={!isEdit}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,6 +101,7 @@ const CMSAboutMe = () => {
                       <Textarea
                         placeholder='Your description'
                         maxLength={999}
+                        disabled={!isEdit}
                         {...field}
                       />
                     </FormControl>
@@ -103,7 +110,7 @@ const CMSAboutMe = () => {
                 )}
               />
 
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full' disabled={!isEdit}>
                 Save
               </Button>
             </form>
