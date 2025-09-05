@@ -17,12 +17,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import SkillIcons from './components/SkillIcons';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import useSkillsState from '@/stores/skillsStore';
 
 const CMSSkills = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const { updateSection, loading, fetchSection, section } = useSkillsState();
+
+  // console.log(loading);
 
   const form = useForm<SkillsSectionFormData>({
     resolver: zodResolver(skillsSectionSchema),
@@ -48,64 +51,76 @@ const CMSSkills = () => {
 
   return (
     <div className='border-[1px] rounded-lg shadow p-8 space-y-4'>
-      <div className='flex justify-between items-center'>
-        <TypographyH1 className='text-left'>Tech Stack</TypographyH1>
-        <Button
-          variant={'ghost'}
-          onClick={() => {
-            setIsEdit((prevState) => !prevState);
-          }}
-        >
-          <Pencil />
-        </Button>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-          <FormField
-            control={form.control}
-            name='title'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Your title'
-                    disabled={!isEdit}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {loading ? (
+        <div className='flex flex-col space-y-4'>
+          <Skeleton className='h-10 w-1/3' />
+          <Skeleton className='h-3.5 w-1/5' />
+          <Skeleton className='h-9 w-full' />
+          <Skeleton className='h-3.5 w-1/5' />
+          <Skeleton className='h-24 w-full' />
+          <Skeleton className='h-9 w-full' />
+        </div>
+      ) : (
+        <>
+          <div className='flex justify-between items-center'>
+            <TypographyH1 className='text-left'>Tech Stack</TypographyH1>
+            <Button
+              variant={'ghost'}
+              onClick={() => {
+                setIsEdit((prevState) => !prevState);
+              }}
+            >
+              <Pencil />
+            </Button>
+          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+              <FormField
+                control={form.control}
+                name='title'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Your title'
+                        disabled={!isEdit}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name='description'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder='Your description'
-                    maxLength={999}
-                    disabled={!isEdit}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder='Your description'
+                        maxLength={999}
+                        disabled={!isEdit}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <Button type='submit' className='w-full' disabled={!isEdit}>
-            Save
-          </Button>
-        </form>
-      </Form>
+              <Button type='submit' className='w-full' disabled={!isEdit}>
+                Save
+              </Button>
+            </form>
+          </Form>
 
-      <Separator />
-
+          <Separator />
+        </>
+      )}
       <SkillIcons />
     </div>
   );

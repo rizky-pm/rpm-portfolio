@@ -19,19 +19,21 @@ export const skillSchema = z.object({
   icon: z
     .any()
     .refine(
-      (file) => !file || file instanceof File,
+      (files) => files instanceof FileList || !files,
       'Icon must be a valid file'
     )
     .refine(
-      (file) =>
-        !file ||
+      (files) =>
+        !files ||
+        files.length === 0 ||
         ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'].includes(
-          file.type
+          files[0]?.type
         ),
       'Only PNG, JPEG, WEBP, and SVG files are allowed'
     )
     .refine(
-      (file) => !file || file.size <= 1 * 1024 * 1024,
+      (files) =>
+        !files || files.length === 0 || files[0]?.size <= 1 * 1024 * 1024,
       'Max file size is 1MB'
     ),
 });
