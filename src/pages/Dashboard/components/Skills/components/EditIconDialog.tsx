@@ -88,7 +88,6 @@ const EditIconDialog = ({
             onSubmit={form.handleSubmit(handleUpdate)}
             className='space-y-6'
           >
-            {/* Skill Name */}
             <FormField
               control={form.control}
               name='name'
@@ -103,7 +102,6 @@ const EditIconDialog = ({
               )}
             />
 
-            {/* Skill Icon */}
             <FormField
               control={form.control}
               name='icon'
@@ -171,7 +169,6 @@ const EditIconDialog = ({
               )}
             />
 
-            {/* Save Button */}
             <div className='flex justify-end gap-3'>
               <Button
                 variant='outline'

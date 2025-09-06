@@ -10,14 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -175,14 +168,12 @@ const SkillIcons = () => {
             />
 
             <Button type='submit' className='w-full'>
-              Save
+              Add
             </Button>
           </form>
         </Form>
 
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader></TableHeader>
           <TableBody>
             {skills.map((skill, index) => (
               <TableRow key={skill.id}>
