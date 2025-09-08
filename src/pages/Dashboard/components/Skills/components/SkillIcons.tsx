@@ -58,12 +58,9 @@ const SkillIcons = () => {
     }
 
     if (editingSkill) {
-      console.log('update skill');
       await updateSkill(editingSkill, values.name, icon as File);
       setEditingSkill(null);
     } else {
-      console.log('add skill');
-      console.log(icon);
       await addSkill(values.name, icon as File);
     }
     setSelectedIcon(undefined);

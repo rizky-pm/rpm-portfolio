@@ -1,0 +1,38 @@
+.experience-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 1rem;
+  grid-template-areas:
+    'employer role'
+    'start-date end-date'
+    'employment-type employment-type'
+    'location location'
+    'description description'
+    'add-btn add-btn';
+}
+
+.employer {
+  grid-area: employer;
+}
+.role {
+  grid-area: role;
+}
+.start-date {
+  grid-area: start-date;
+}
+.end-date {
+  grid-area: end-date;
+}
+.employment-type {
+  grid-area: employment-type;
+}
+.location {
+  grid-area: location;
+}
+.description {
+  grid-area: description;
+}
+.add-btn {
+  grid-area: add-btn;
+}
